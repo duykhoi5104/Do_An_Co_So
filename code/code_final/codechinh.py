@@ -9,5 +9,6 @@ imgs = get_image_list(dir)
 
 #Hiển thị ảnh bằng hàm display:
 for img in imgs:
-    display(img)
     print(img.size)
+    display(img)
+    

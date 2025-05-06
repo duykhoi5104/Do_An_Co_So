@@ -2,32 +2,38 @@ from facenet_pytorch import MTCNN
 from PIL import Image
 import os
 
-# Khởi tạo MTCNN
-mtcnn = MTCNN(image_size=160, margin=20)
+mtcnn = MTCNN(keep_all=False)
 
-# Thư mục gốc chứa ảnh theo người
-input_dir = '/Users/ttdat/Documents/Do_An_Co_So/dataset/khôi'               # ← bạn đổi tên đúng theo thư mục bạn có
-output_dir = '/Users/ttdat/Documents/Do_An_Co_So/output/khôi'        # ← nơi sẽ lưu ảnh sau khi cắt
-
+input_dir = "/Users/ttdat/Documents/Do_An_Co_So/dataset/Văn Tiến"
+output_dir = os.path.join(input_dir, "/Users/ttdat/Documents/Do_An_Co_So/output/Văn Tiến" \
+"")
 os.makedirs(output_dir, exist_ok=True)
 
-# Duyệt qua từng người
-for person_name in os.listdir(input_dir):
-    person_folder = os.path.join(input_dir, person_name)
+def expand_box_proportional(box, img_width, img_height, target_width=320, target_height=400):
+    x1, y1, x2, y2 = box
+    cx, cy = (x1 + x2) / 2, (y1 + y2) / 2  # tâm mặt
+    half_w, half_h = target_width / 2, target_height / 2
+    nx1 = max(0, cx - half_w)
+    ny1 = max(0, cy - half_h)
+    nx2 = min(img_width, cx + half_w)
+    ny2 = min(img_height, cy + half_h)
+    return (nx1, ny1, nx2, ny2)
 
-    if not os.path.isdir(person_folder):
-        continue  # bỏ qua nếu không phải thư mục
-
-    save_folder = os.path.join(output_dir, person_name)
-    os.makedirs(save_folder, exist_ok=True)
-
-    for image_name in os.listdir(person_folder):
-        img_path = os.path.join(person_folder, image_name)
-
+for filename in os.listdir(input_dir):
+    if filename.lower().endswith(".jpg"):
+        img_path = os.path.join(input_dir, filename)
         try:
-            img = Image.open(img_path)
-            save_path = os.path.join(save_folder, image_name)
-            mtcnn(img, save_path=save_path)
-            print(f"Đã cắt: {image_name} → {person_name}")
+            img = Image.open(img_path).convert("RGB")
+            width, height = img.size
+            box, prob = mtcnn.detect(img)
+
+            if box is not None:
+                bbox = expand_box_proportional(box[0], width, height, target_width=320, target_height=400)
+                face_crop = img.crop(bbox).resize((320, 400))  # giữ đúng kích thước mẫu bạn gửi
+                save_path = os.path.join(output_dir, f"crop_{filename}")
+                face_crop.save(save_path)
+                print(f"[✓] Crop + resize: {save_path}")
+            else:
+                print(f"[x] Không phát hiện mặt: {filename}")
         except Exception as e:
-            print(f"Lỗi ảnh {image_name}: {e}")
+            print(f"[!] Lỗi với {filename}: {e}")
