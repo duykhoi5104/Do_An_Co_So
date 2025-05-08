@@ -61,4 +61,4 @@ for person in os.listdir(data_dir):
 np.savez("train_embeddings.npz", X=np.array(X_train), y=np.array(y_train))
 np.savez("test_embeddings.npz", X=np.array(X_test), y=np.array(y_test))
 
-print(f"\n[✓] HOÀN TẤT — Train: {len(X_train)} ảnh, Test: {len(X_test)} ảnh")
+print(f"\n HOÀN TẤT — Train: {len(X_train)} ảnh, Test: {len(X_test)} ảnh")

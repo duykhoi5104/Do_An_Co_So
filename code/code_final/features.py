@@ -46,14 +46,14 @@ for person_name in os.listdir(data_root):
                     embeddings.append(emb[0])
                     labels.append(person_name)
                 else:
-                    print(f"❌ Không nhận diện được khuôn mặt: {filename} ({person_name})")
+                    print(f" Không nhận diện được khuôn mặt: {filename} ({person_name})")
 
             except Exception as e:
-                print(f"⚠️ Lỗi khi mở ảnh {filename}: {e}")
+                print(f" Lỗi khi mở ảnh {filename}: {e}")
 
     if embeddings:
         save_path = os.path.join(save_root, f"{person_name}.npz")
         np.savez(save_path, features=np.array(embeddings), labels=np.array(labels))
-        print(f"✅ Đã lưu đặc trưng của {person_name} vào {save_path}")
+        print(f" Đã lưu đặc trưng của {person_name} vào {save_path}")
     else:
-        print(f"⚠️ Không có đặc trưng nào được trích từ {person_name}")
+        print(f" Không có đặc trưng nào được trích từ {person_name}")
