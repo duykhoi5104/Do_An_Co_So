@@ -13,8 +13,8 @@ mtcnn = MTCNN(image_size=160, margin=20, device=device)
 facenet = InceptionResnetV1(pretrained='vggface2').eval().to(device)
 
 # Đường dẫn dữ liệu và nơi lưu đặc trưng
-data_root = "C:/Users/Loc/Desktop/DACS_git/Do_An_Co_So/dữ liệu chính"
-save_root = "C:/Users/Loc/Desktop/DACS_git/Do_An_Co_So/code/saved_embeddings"
+data_root = "/Users/ttdat/Documents/Do_An_Co_So/dữ liệu chính"
+save_root = "/Users/ttdat/Documents/Do_An_Co_So/code/saved_embeddings"
 os.makedirs(save_root, exist_ok=True)
 
 # Duyệt từng thư mục người
