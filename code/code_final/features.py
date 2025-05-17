@@ -3,7 +3,7 @@ from PIL import Image
 import torch
 import numpy as np
 import os
-from imagetools import histogram_equalization  # Nếu không dùng thì có thể bỏ dòng này
+
 
 # Thiết bị
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
@@ -13,8 +13,8 @@ mtcnn = MTCNN(image_size=160, margin=20, device=device)
 facenet = InceptionResnetV1(pretrained='vggface2').eval().to(device)
 
 # Đường dẫn dữ liệu và nơi lưu đặc trưng
-data_root = "/Users/ttdat/Documents/Do_An_Co_So/dữ liệu chính"
-save_root = "/Users/ttdat/Documents/Do_An_Co_So/code/saved_embeddings"
+data_root = "C:/Users/Loc/Desktop/Do_An_Co_So/Do_An_Co_So/dữ liệu chính"
+save_root = "C:/Users/Loc/Desktop/Do_An_Co_So/Do_An_Co_So/code/saved_embeddings"
 os.makedirs(save_root, exist_ok=True)
 
 # Duyệt từng thư mục người

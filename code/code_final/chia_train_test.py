@@ -3,7 +3,7 @@ import os
 import random
 
 # Đường dẫn chứa các file .npz
-data_root = "C:/Users/Loc/Desktop/DACS_git/Do_An_Co_So/code/saved_embeddings"
+data_root = "C:/Users/Loc/Desktop/Do_An_Co_So/Do_An_Co_So/code/saved_embeddings"
 
 # Danh sách đặc trưng train và test
 train_embeddings, train_labels = [], []
@@ -48,7 +48,7 @@ X_test = np.vstack(test_embeddings)
 y_test = np.concatenate(test_labels)
 
 # Lưu kết quả
-save_dir = "C:/Users/Loc/Desktop/DACS_git/Do_An_Co_So/code/code_final/data_split"  
+save_dir = "C:/Users/Loc/Desktop/Do_An_Co_So/Do_An_Co_So/code/code_final/data_split"  
 np.savez(os.path.join(save_dir, "train_embeddings.npz"), features=X_train, labels=y_train)
 np.savez(os.path.join(save_dir, "test_embeddings.npz"), features=X_test, labels=y_test)
 
